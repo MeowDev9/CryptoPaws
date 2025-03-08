@@ -1,0 +1,85 @@
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const Admin = require("../models/Admin");
+const WelfareOrganization = require("../models/WelfareOrganization");
+const verifyAdmin = require("../middleware/authmiddleware"); // Correct import
+
+const router = express.Router();
+
+// ✅ Admin Login Route
+router.post("/login", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    // 1️⃣ Check if the admin exists
+    const admin = await Admin.findOne({ email });
+    if (!admin) {
+      return res.status(400).json({ message: "Admin not found!" });
+    }
+
+    // 2️⃣ Verify the password
+    const isMatch = await bcrypt.compare(password, admin.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials!" });
+    }
+
+    // 3️⃣ Generate JWT Token
+    const token = jwt.sign(
+      { id: admin._id, role: "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    // 4️⃣ Send the response with the token
+    res.status(200).json({ message: "Login successful!", token });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// ✅ Get Pending Welfare Organizations
+router.get("/organizations/pending", async (req, res) => {
+  try {
+    const pendingOrganizations = await WelfareOrganization.find({ status: "pending" });
+    res.status(200).json(pendingOrganizations);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// ✅ Update Welfare Organization Status (Approve/Reject)
+router.put("/organizations/:id/status", verifyAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    // Validate the status
+    if (!["approved", "rejected"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status value. Must be 'approved' or 'rejected'." });
+    }
+
+    // Find the organization and update its status
+    const updatedOrganization = await WelfareOrganization.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedOrganization) {
+      return res.status(404).json({ message: "Welfare organization not found." });
+    }
+
+    res.status(200).json({ message: "Status updated successfully!", organization: updatedOrganization });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// ✅ Protected Route - Only Admins Can Access
+router.get("/dashboard", verifyAdmin, (req, res) => {
+  res.status(200).json({ message: "Welcome to the Admin Dashboard" });
+});
+
+module.exports = router;
