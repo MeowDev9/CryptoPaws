@@ -3,12 +3,13 @@ const WelfareOrganization = require("../models/WelfareOrganization");
 
 const router = express.Router();
 
-// Register a welfare organization
+
 router.post("/register", async (req, res) => {
   try {
     const { 
       organizationName,
-      email, 
+      email,
+      password, 
       phone,
       address,
       description,
@@ -17,28 +18,29 @@ router.post("/register", async (req, res) => {
     
     console.log('Received registration request:', req.body);
 
-    // Check if all required fields are present
-    if (!organizationName || !email  || !phone || !address || !description || !website) {
+  
+    if (!organizationName || !email || !password || !phone || !address || !description || !website) {
       return res.status(400).json({ 
         message: "Missing required fields",
-        required: ['organizationName', 'email', 'phone', 'address','description','website']
+        required: ['organizationName', 'email', 'password', 'phone', 'address','description','website']
       });S
     }
 
-    // Check if the email is already registered
+  
     const existingOrg = await WelfareOrganization.findOne({ email });
 
     if (existingOrg) {
-      // If the existing organization is rejected, allow re-registration
+    
       if (existingOrg.status === "rejected") {
         const newOrganization = new WelfareOrganization({
           organizationName,
           email,
+          password,
           phone,
           address,
           description,
           website,
-          status: "pending", // Set status to pending for the new registration
+          status: "pending", 
         });
         await newOrganization.save();
         return res.status(201).json({ 
@@ -46,20 +48,21 @@ router.post("/register", async (req, res) => {
           organization: newOrganization 
         });
       } else {
-        // If the existing organization is not rejected, block the new registration
+        
         return res.status(400).json({ message: "Organization already registered!" });
       }
     }
 
-    // If no existing organization, create a new one
+
     const newOrganization = new WelfareOrganization({
       organizationName,
       email,
+      password,
       phone,
       address,
       description,
       website,
-      status: "pending", // Default status for new registrations
+      status: "pending",
     });
 
     await newOrganization.save();
