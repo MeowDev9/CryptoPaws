@@ -1,0 +1,122 @@
+/* Full-page container */
+.donate-page-container {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    position: relative;
+    height: 120vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Background image styling */
+.background-image-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Overlay effect */
+.donate-page-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Main heading styling */
+.main-heading {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: white;
+    z-index: 2;
+    position: relative;
+}
+
+/* Flexbox for columns */
+.donate-columns {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    width: 80%;
+    z-index: 2;
+    position: relative;
+}
+
+/* Column container */
+.donate-column {
+    position: relative;
+    width: 48%;
+    height: 600px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Column background image */
+.background-image-donate {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* Overlay for each column */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+}
+
+/* Text content inside columns */
+.text-content {
+    position: relative;
+    z-index: 3;
+    color: white;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.text-content h2 {
+    font-size: 2.1em;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.text-content p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+/* Buttons */
+.view-button {
+    padding: 12px 25px;
+    border: none;
+    background-color: #00a8cc;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1.1em;
+}
+
+.view-button:hover {
+    background-color: #072a2f;
+}

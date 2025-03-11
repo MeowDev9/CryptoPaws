@@ -1,0 +1,553 @@
+/* General Styles */
+.home-page {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #0A2540;
+  color: white;
+}
+
+.home-slideshow-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  overflow: hidden;
+  background-color: #072a2f;
+}
+
+.home-slideshow-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.home-slideshow-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  z-index: 2;
+}
+
+.home-slideshow-left {
+  flex: 1;
+}
+
+.home-slideshow-h1 {
+  font-size: 4rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.home-slideshow-h2 {
+  font-size: 2rem;
+  color: #5fa3a6;
+  line-height: 1.5;
+}
+
+.home-slideshow-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 5%;
+}
+
+.home-slideshow-button {
+  padding: 15px 20px;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: #00a8cc;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.home-slideshow-button:hover {
+  background-color: #ffffff;
+  color: #072a2f;
+}
+
+.home-slideshow-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.home-slideshow-image.active {
+  opacity: 1;
+}
+
+.home-slideshow-image.inactive {
+  opacity: 0;
+}
+
+.home-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.495);
+  z-index: -1;
+}
+
+.home-container {
+  position: relative;
+  z-index: 1;
+  padding: 0;
+}
+
+.home-paws-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.home-content-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.home-left-container {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin-left: 15%;
+}
+
+.home-left-container h1 {
+  font-size: 3em;
+  margin: 0;
+}
+
+.home-left-container p {
+  font-size: 1.2em;
+}
+
+.home-donate-button {
+  padding: 20px 30px;
+  background-color: #00a8cc;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  width: 250px;
+  transition: all 0.3s ease;
+}
+
+.home-donate-button:hover {
+  background-color: #ffffff;
+  color: #072a2f;
+}
+
+.home-donation-section {
+  background-color: #e76f51;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  width: 60%;
+}
+
+.home-right-container {
+  flex: 1 1 300px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10%;
+}
+
+.home-animal-rescue-img {
+  width: 100%;
+  max-width: 410px;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.home-help-section {
+  background-color: #072a2f;
+  color: #e4e4e4;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.home-help-title {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.home-help-subtitle {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  color: #a9b3b7;
+}
+
+.home-help-cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.home-help-card {
+  background-color: #0b3a3f;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.home-help-card:hover {
+  transform: translateY(-5px);
+}
+
+.home-help-icon {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.home-help-card-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.home-help-card-description {
+  font-size: 1em;
+  line-height: 1.5;
+  color: #cdd4d8;
+}
+
+.home-donation-section p {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.home-donation-section h2 {
+  font-size: 2em;
+  margin: 10px 0 0 0;
+}
+
+.home-info-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.home-column {
+  flex: 1;
+  padding: 20px;
+}
+
+.home-register-column {
+  background-color: #29A0B1;
+}
+
+.home-stats-column {
+  background-color: #167D7F;
+}
+
+.home-donate-column {
+  background-color: #29A0B1;
+}
+
+.home-register-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #1A3E5D;
+  color: white;
+}
+
+.home-donate-button1 {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #1A3E5D;
+  color: white;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-blockchain-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.home-blockchain-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.home-blockchain-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.home-blockchain-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.home-blockchain-left {
+  flex: 1;
+  padding: 20px;
+  margin-left: 10%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.home-blockchain-right {
+  flex: 1 1 300px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-blockchain-image {
+  width: 400px;
+  height: 600px;
+  object-fit: fill;
+  border-radius: 20px;
+}
+
+.home-blockchain-heading {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.home-blockchain-description {
+  font-size: 1.1rem;
+  margin: 20px 0;
+}
+
+.home-blockchain-points {
+  list-style-type: none;
+  padding: 0;
+}
+
+.home-blockchain-points li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.home-cards-section {
+  position: relative;
+  width: 100%;
+  height: 600px;
+}
+
+.home-background-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.home-background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.home-cards-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.home-cards-wrapper {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  width: calc(300px * 6 + 20px * 5);
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+}
+
+.home-card {
+  width: 300px;
+  height: 400px;
+  background-color: #072a2f;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+
+.home-card-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.home-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.home-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.home-card-points {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.home-card-points li {
+  margin-bottom: 8px;
+}
+
+.home-card-btn {
+  padding: 10px 20px;
+  background-color: #00a8cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.home-card-btn:hover {
+  background-color: #ffffff;
+  color: black;
+}
+
+.home-arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.home-left-arrow {
+  left: 10px;
+}
+
+.home-right-arrow {
+  right: 10px;
+}
+
+.home-cards-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.home-cards-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+.home-cards-wrapper::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .home-content-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home-left-container {
+    align-items: center;
+  }
+
+  .home-animal-rescue-imgs {
+    width: 80%;
+  }
+
+  .home-info-section {
+    flex-direction: column;
+  }
+
+  .home-column {
+    margin: 10px 0;
+  }
+}
