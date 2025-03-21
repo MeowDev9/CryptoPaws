@@ -9,7 +9,7 @@
   font-family: Arial, sans-serif;
 }
 
-h1 {
+.profile-container h1 {
   margin-bottom: 20px;
   font-size: 24px;
   color: #333;
@@ -34,7 +34,9 @@ h1 {
   border-radius: 4px;
 }
 
-button {
+.edit-btn {
+  background-color: #4CAF50;
+  color: white;
   margin: 10px 5px;
   padding: 8px 16px;
   font-size: 14px;
@@ -43,21 +45,28 @@ button {
   cursor: pointer;
 }
 
-.edit-btn {
-  background-color: #4CAF50;
-  color: white;
-}
-
 .delete-btn {
   background-color: #f44336;
   color: white;
+  margin: 10px 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .save-btn {
   background-color: #008CBA;
   color: white;
+  margin: 10px 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-button:hover {
+.save-btn,.delete-btn,.edit-btn button:hover {
   opacity: 0.8;
 }

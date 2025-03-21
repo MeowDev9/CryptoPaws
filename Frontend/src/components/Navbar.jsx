@@ -1,25 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="navbar">
       <div className="logo">
-        <img src="/images/logo.png" alt="Logo" />
+        <Link to="/">
+          <img src="/images/logo.png" alt="Logo" />
+        </Link>
       </div>
-      <nav className="menu">
+
+      {/* Hamburger Menu Icon */}
+      <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+        <div className={menuOpen ? "bar open" : "bar"}></div>
+        <div className={menuOpen ? "bar open" : "bar"}></div>
+        <div className={menuOpen ? "bar open" : "bar"}></div>
+      </div>
+
+      {/* Navigation Menu */}
+      <nav className={`menu ${menuOpen ? "active" : ""}`}>
         <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/donate">Donate</Link></li>
-          <li><Link to="/adopt-animal">Adopt Animal</Link></li>
-          <li><Link to="/report-emergency">Report Emergency</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li>
-            <Link to="/login">
-              <button className="login-btn">Login/Signup</button>
-            </Link>
-          </li>
+          <li><Link to="/" onClick={() => setMenuOpen(false)}>Home</Link></li>
+          <li><Link to="/donate" onClick={() => setMenuOpen(false)}>Donate</Link></li>
+          <li><Link to="/adopt-animal" onClick={() => setMenuOpen(false)}>Adopt Animal</Link></li>
+          <li><Link to="/report-emergency" onClick={() => setMenuOpen(false)}>Report Emergency</Link></li>
+          <li><Link to="/about" onClick={() => setMenuOpen(false)}>About</Link></li>
         </ul>
       </nav>
     </header>
