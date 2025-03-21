@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User'); // Assuming you have a User model
+const User = require('../models/User'); 
 const router = express.Router();
 
 // JWT secret key
@@ -8,7 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 // Middleware to verify user authentication
 const verifyAuth = (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1]; // Extract the token from Authorization header
+    const token = req.headers.authorization?.split(" ")[1]; 
     console.log("Token received:", token);  // Log token for debugging
 
     if (!token) {
@@ -17,15 +17,16 @@ const verifyAuth = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        console.log("Decoded token:", decoded); // Log decoded token for debugging
-        req.userId = decoded.id;  // Attach the user ID to the request
+        console.log("Decoded token:", decoded); 
+        req.userId = decoded.id;  
         next();
     } catch (err) {
+        console.error("Token verification error:", err);
         return res.status(403).json({ error: 'Forbidden: Invalid token', details: err.message });
     }
 };
 
-// Fetch user profile
+
 router.get('/profile', verifyAuth, async (req, res) => {
     try {
         const user = await User.findById(req.userId);

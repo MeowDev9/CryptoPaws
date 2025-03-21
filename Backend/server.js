@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require('dotenv');
+
 const fs = require('fs');
 require("dotenv").config(); 
 
@@ -18,14 +19,10 @@ const welfareRoutes = require("./routes/welfareRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
 
-// Remove the hardcoded URL and use environment variable instead
+
 const url = process.env.MONGODB_URI;
 
-console.log("Dependencies loaded...");
-
 const app = express();
-
-console.log("Initializing middleware...");
 
 // Middleware
 app.use(cors({
@@ -37,11 +34,11 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static("uploads")); // Serve uploaded files (e.g., images)
+app.use("/uploads", express.static("uploads"));
 
 console.log("Connecting to MongoDB...");
 
-// MongoDB connection
+
 mongoose
     .connect(url, {
         useNewUrlParser: true,
@@ -55,17 +52,10 @@ mongoose
         console.error('MongoDB connection error:', error);
     });
 
-// Add error handler
-mongoose.connection.on('error', err => {
-    console.error('MongoDB connection error:', err);
-});
-
-console.log("Setting up routes...");
-
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/donate", donateRoutes);
-app.use("/api", profileRouter);
+app.use("/api/profile", profileRouter);
 app.use("/api/emergency", emergencyRoutes);
 app.use("/api/welfare", (req, res, next) => {
     console.log(`Welfare API Request: ${req.method} ${req.url}`);

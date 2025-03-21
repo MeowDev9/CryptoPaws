@@ -1,309 +1,241 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import CountUp from "react-countup";
 import "../styles/Home.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import AutoScrollCards from "../components/AutoScrollCards";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
-// CardSection Component
-const CardSection = ({ scrollPosition, handleLeftClick, handleRightClick }) => {
+const HeroSection = () => {
   return (
-    <div className="home-cards-section">
-      <div className="home-background-wrapper">
-        <img
-          src="/images/Background2.jpeg"
-          alt="Background"
-          className="home-background-image"
-        />
-        <div className="home-background-overlay"></div> {/* Overlay for background */}
-      </div>
-      <div className="home-cards-container">
-        <button className="home-arrow-btn home-left-arrow" onClick={handleLeftClick}>
-          ←
-        </button>
-        <div
-          className="home-cards-wrapper"
-          style={{ transform: `translateX(-${scrollPosition * 320}px)` }}
+    <div className="hero-section">
+      <img src="/images/slideshowdog.jpg" alt="" className="hero-background" />
+      <div className="hero-overlay"></div>
+      <div className="hero-content">
+        <motion.h3
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          {/* Card 1 */}
-          <div className="home-card">
-            <img src="/images/card1.jpg" alt="Card 1" className="home-card-image" />
-            <div className="home-card-content">
-              <h3 className="home-card-title">Card Title 1</h3>
-              <ul className="home-card-points">
-                <li>Point 1</li>
-                <li>Point 2</li>
-                <li>Point 3</li>
-              </ul>
-              <button className="home-card-btn">Learn More</button>
-            </div>
-          </div>
-          {/* Card 2 */}
-          <div className="home-card">
-            <img src="/images/card2.jpg" alt="Card 2" className="home-card-image" />
-            <div className="home-card-content">
-              <h3 className="home-card-title">Card Title 2</h3>
-              <ul className="home-card-points">
-                <li>Point 1</li>
-                <li>Point 2</li>
-                <li>Point 3</li>
-              </ul>
-              <button className="home-card-btn">Learn More</button>
-            </div>
-          </div>
-          {/* Card 3 */}
-          <div className="home-card">
-            <img src="/images/card3.jpg" alt="Card 3" className="home-card-image" />
-            <div className="home-card-content">
-              <h3 className="home-card-title">Card Title 3</h3>
-              <ul className="home-card-points">
-                <li>Point 1</li>
-                <li>Point 2</li>
-                <li>Point 3</li>
-              </ul>
-              <button className="home-card-btn">Learn More</button>
-            </div>
-          </div>
-          {/* Card 4 */}
-          <div className="home-card">
-            <img src="/images/card4.jpg" alt="Card 4" className="home-card-image" />
-            <div className="home-card-content">
-              <h3 className="home-card-title">Card Title 4</h3>
-              <ul className="home-card-points">
-                <li>Point 1</li>
-                <li>Point 2</li>
-                <li>Point 3</li>
-              </ul>
-              <button className="home-card-btn">Learn More</button>
-            </div>
-          </div>
-          {/* Card 5 */}
-          <div className="home-card">
-            <img src="/images/card5.jpg" alt="Card 5" className="home-card-image" />
-            <div className="home-card-content">
-              <h3 className="home-card-title">Card Title 5</h3>
-              <ul className="home-card-points">
-                <li>Point 1</li>
-                <li>Point 2</li>
-                <li>Point 3</li>
-              </ul>
-              <button className="home-card-btn">Learn More</button>
-            </div>
-          </div>
-          {/* Card 6 */}
-          <div className="home-card">
-            <img src="/images/card6.jpg" alt="Card 6" className="home-card-image" />
-            <div className="home-card-content">
-              <h3 className="home-card-title">Card Title 6</h3>
-              <ul className="home-card-points">
-                <li>Point 1</li>
-                <li>Point 2</li>
-                <li>Point 3</li>
-              </ul>
-              <button className="home-card-btn">Learn More</button>
-            </div>
-          </div>
-        </div>
-        <button className="home-arrow-btn home-right-arrow" onClick={handleRightClick}>
-          →
-        </button>
+          Raising Hope
+        </motion.h3>
+        <br />
+        <motion.h1
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
+        >
+          To the Homeless & Hopeless Animals
+        </motion.h1>
+        <Link to="/login">
+        <motion.button
+          className="hero-button"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+        >
+          Login / Signup →
+        </motion.button>
+        </Link>
       </div>
     </div>
   );
 };
 
-// Home Component
-function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [raisedAmount, setRaisedAmount] = useState(0);
-  const [startCount, setStartCount] = useState(false); // Flag to start animation
-  const [scrollPosition, setScrollPosition] = useState(0); // Scroll position state
-  const homeContainerRef = useRef(null); // Ref for home-container
-  const images = [
-    "/images/slideshowdog.jpg",
-    "/images/slideshowdogs.jpg",
-  ];
 
-  // Target raised amount
-  const targetAmount = 17203;
-
-  // Slideshow effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length); // Cycle through images
-    }, 5000); // Change image every 5 seconds
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [images.length]);
-
-  // Counting animation effect
-  useEffect(() => {
-    if (startCount) {
-      const increment = targetAmount / 100; // Increment value (to get smoother animation)
-      const interval = setInterval(() => {
-        setRaisedAmount((prevAmount) => {
-          if (prevAmount + increment >= targetAmount) {
-            clearInterval(interval); // Stop the interval once target is reached
-            return targetAmount;
-          }
-          return prevAmount + increment;
-        });
-      }, 30); // Update every 30ms for smooth animation
-
-      return () => clearInterval(interval); // Cleanup interval on component unmount
-    }
-  }, [startCount, targetAmount]);
-
-  // Intersection Observer to detect scrolling
+const StatisticsSection = () => {
+  const [startAnimation, setStartAnimation] = useState(false);
+  const sectionRef = useRef(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setStartCount(true); // Start the counting animation
+          setStartAnimation(true);
         }
       },
-      { threshold: 0.5 } // Trigger when 50% of the element is visible
+      { threshold: 0.5 }
     );
 
-    if (homeContainerRef.current) {
-      observer.observe(homeContainerRef.current); // Observe the home-container
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
 
     return () => {
-      if (homeContainerRef.current) {
-        observer.unobserve(homeContainerRef.current); // Cleanup on unmount
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
       }
     };
   }, []);
 
-  const totalCards = 6; // Total number of cards
+  return (
+  
+    <section ref={sectionRef} className="statistics-section">
+      <div className="container1">
+        <h3 className="technicalstatistics-h3">GREAT REVIEWS FOR OUR GREAT SERVICES</h3>
+        <h2 className="section-title">Technical Statistics</h2>
+        <div className="stats-grid">
+          <StatBox imgSrc="/images/charityhand.png" number={60000000} text="Fund Raised" start={startAnimation} />
+          <StatBox imgSrc="/images/community.png" number={9200} text="Completed Projects" start={startAnimation} />
+          <StatBox imgSrc="/images/donateicon.png" number={5800} text="Donations" start={startAnimation} />
+          <StatBox imgSrc="/images/volunteer.png" number={2750} text="Volunteers" start={startAnimation} />
+        </div>
+      </div>
+    </section>
+  );
+};
 
-  const handleLeftClick = () => {
-    setScrollPosition((prev) => (prev === 0 ? totalCards - 1 : prev - 1));
-  };
+const StatBox = ({ imgSrc, number, text, start }) => (
+  <div className="stat-box">
+    <img src={imgSrc} alt={text} className="stat-icon" />
+    <CountUp start={start ? 0 : null} end={start ? number : 0} duration={3} separator="," />
+    <p>{text}</p>
+  </div>
+);
 
-  const handleRightClick = () => {
-    setScrollPosition((prev) => (prev === totalCards - 1 ? 0 : prev + 1));
-  };
 
+const BlockchainSection = () => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
+
+  return (
+    <section className="blockchain-section" ref={ref}>
+      <motion.div
+        className="blockchain-container"
+        initial={{ opacity: 0, y: 100 }} // Start from bottom (y: 100)
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        <motion.h3
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          CRYPTOPAWS
+        </motion.h3>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          Making Animal Charity Easy and Secure through Blockchain Transparency
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 50 }} // Buttons also animate from bottom to top
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.7, duration: 0.5 }}
+        >
+          <Link to="/donate">
+            <button>Donate Now</button>
+          </Link>
+
+          <Link to="/register-welfare">
+            <button id="blockchain-container-btn2">Register Organization</button>
+          </Link>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+};
+
+
+function Home() {
   return (
     <>
       <Navbar />
-      <div className="home-page">
-        <div className="home-slideshow-container">
-          <div className="home-slideshow-overlay"></div>
-          <div className="home-slideshow-content">
-            {/* Left Column: Headings */}
-            <div className="home-slideshow-left">
-              <h1 className="home-slideshow-h1">CryptoPaws</h1>
-              <h2 className="home-slideshow-h2">Empowering Animal Charity with Blockchain Transparency</h2>
-            </div>
+      <HeroSection/>
 
-            {/* Right Column: Login/Signup Button */}
-            <div className="home-slideshow-right">
-              <Link to="/report-emergency"><button className="home-slideshow-button">Report Emergency</button></Link>
-              <Link to="/register-welfare"><button className="home-register-welfare-btn">Register as Welfare</button></Link>
-            </div>
-          </div>
-
-          {/* Background Image Slideshow */}
-          {images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Slideshow ${index + 1}`}
-              className={`home-slideshow-image ${index === currentIndex ? "active" : "inactive"}`}
-            />
-          ))}
-        </div>
-
-        {/* Black Overlay */}
-        <div className="home-overlay"></div>
-        <div className="home-container" ref={homeContainerRef}>
-          <img className="home-paws-bg" src="/images/pawsbg.png" alt="paws-bg" />
-          <div className="home-content-section">
-
-            {/* Left Container */}
-            <div className="home-left-container">
-              <h1>DONATE NOW FOR A GREAT CAUSE</h1>
-              <p>
-                "Join us in making a difference! Our platform empowers global
-                donors to support animal welfare in Pakistan using cryptocurrency.
-                Together, we can save lives and provide care for animals in need"
-              </p>
-              <button className="home-donate-button">DONATE NOW</button>
-              <div className="home-donation-section">
-                <p>Raised so far</p>
-                <h2>${raisedAmount.toFixed(2)}</h2> {/* Format to two decimal places */}
-              </div>
-            </div>
-
-            {/* Right Container */}
-            <div className="home-right-container">
-              <img src="/images/animalrescue2.jpg" alt="dog rescue" className="home-animal-rescue-img" />
-              <img
-                src="/images/animalrescue.jpg"
-                alt="Dog Rescue"
-                className="home-animal-rescue-img"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="home-help-section">
-          <h2 className="home-help-title">How you can take part?</h2>
-          <p className="home-help-subtitle">
-            You can take part by donating, reporting emergency cases, or
-            by adopting animals. Every effort makes a difference!
+      <div className="donation-section">
+        <div className="content-column">
+          <h2>We Help Thousands of Animals to Get Their Shelter</h2>
+          <p>
+          Every year, countless animals are left homeless, hungry, and in need of care. With your support
+          , we provide shelter, food, and medical aid, ensuring that every rescued animal finds a safe and loving home.
           </p>
-          <div className="home-help-cards">
-            <div className="home-help-card">
-              <img
-                src="/images/donateicon.png"
-                alt="Give Donation"
-                className="home-help-icon"
-              />
-              <h3 className="home-help-card-title">Give donation</h3>
-              <p className="home-help-card-description">
-                Your donation funds vital programs and supports communities in
-                need. Every contribution counts!
-              </p>
+          <p>
+          From abandoned pets to injured strays, we work tirelessly to give animals the care they deserve.
+           Your donations help us rescue, rehabilitate, and rehome thousands of animals, offering them a future filled with love and security.
+          </p>
+          <div className="buttons-container">
+            <div className="image-button">
+              <img src="/images/charityhand.png" alt="Donate" />
+              <span>Start Donating</span>
             </div>
-            <div className="home-help-card">
-              <img
-                src="/images/emergencyicon.png"
-                alt="Report emergency"
-                className="home-help-icon"
-              />
-              <h3 className="home-help-card-title">Report Emergency</h3>
-              <p className="home-help-card-description">
-                Report any type of emergency that a stray or home animal needs
-                and our system will inform nearby animal rescue centers to reach
-                there ASAP!
-              </p>
+            <div className="image-button">
+              <img src="/images/community.png" alt="Community" />
+              <span>Join Our Community</span>
             </div>
-            <div className="home-help-card">
-              <img
-                src="/images/dogicon.png"
-                alt="Adoption"
-                className="home-help-icon"
-              />
-              <h3 className="home-help-card-title">Adopt Animal</h3>
-              <p className="home-help-card-description">
-                You can adopt any animal of your choice by paying some fee that
-                will directly go to charity and you can also post your pet up for
-                adoption.
-              </p>
+            <div className="image-button">
+              <img src="/images/volunteer.png" alt="Volunteer" />
+              <span>Be A Volunteer</span>
             </div>
           </div>
         </div>
 
-        <CardSection
-          scrollPosition={scrollPosition}
-          handleLeftClick={handleLeftClick}
-          handleRightClick={handleRightClick}
-        />
+        <div className="form-column">
+          <div className="donation-form">
+            <h2>Animal Charity</h2>
+            <h3>Giving is the greatest act of grace</h3>
+            <form>
+              <label>YOUR FULL NAME</label>
+              <input type="text" placeholder="Your Full Name" />
+
+              <label>EMAIL ADDRESS</label>
+              <input type="email" placeholder="Email" />
+
+              <label>SELECT CAUSE</label>
+              <select>
+                <option>Food</option>
+                <option>Shelter</option>
+                <option>Health</option>
+              </select>
+
+              <label>AMOUNT TO DONATE</label>
+              <input type="text" placeholder="Amount" />
+
+              <div className="payment-methods">
+                <label><input type="radio" name="payment" /> PayPal</label>
+                <label><input type="radio" name="payment" /> Credit Card</label>
+                <label><input type="radio" name="payment" /> Payoneer</label>
+              </div>
+
+              <button type="submit" className="donate-btn">Donate Now</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <Footer />
+
+      <StatisticsSection />
+      <AutoScrollCards />
+      <BlockchainSection/>
+      <section className="adoption-section">
+      {/* Left Image */}
+      <div className="adoption-image">
+        <img src="images/dog-image.jpg" alt="Smiling Children" />
+      </div>
+
+      {/* Right Content */}
+      <div className="adoption-content">
+        <p className="adoption-subtitle">Welcome to CryptoPaws Non-Profit Charity</p>
+        <h1 className="adoption-title">Do You Care About Me?</h1>
+        <p className="adoption-text">
+        Give a loving home to a rescued animal today! Our platform connects you with
+         animals in need of shelter, care, and companionship. By adopting from our website,
+          you not only gain a loyal friend but also help reduce animal homelessness.
+        </p>
+        <p className="adoption-text">
+        Browse through our listings of adorable pets waiting for their forever families.
+         Each adoption gives an animal a second chance at life. Start your journey today—click
+          "Adopt Now" and bring home a new best friend!
+        </p>
+        <Link to="/adopt-animal" className="adoption-button">
+          Start Adoption
+        </Link>
+      </div>
+    </section>
+    <Footer/>
     </>
   );
 }

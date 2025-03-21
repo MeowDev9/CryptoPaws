@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/LoginPage.css";
-
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 const LoginPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
@@ -67,13 +68,16 @@ const LoginPage = () => {
   };
 
   return (
+    <>
+    <Navbar/>
+    <div className="bg-img-loginpage"><h1>Login / Signup</h1>
+    </div>
     <div className="login-page">
-      <img src="/images/BlockChain.jpeg" alt="Background" className="background-image" />
-      <div className={`container ${isSignUp ? "active" : ""}`} id="container">
+      <div className={`login-page-container ${isSignUp ? "active" : ""}`} id="login-page-container">
         {/* Sign-Up Form */}
         <div className="form-container sign-up">
           <form onSubmit={handleFormSubmit}>
-            <h1>Create Account</h1>
+            <h1 className="login-form-h1">Create Account</h1>
             {/* Display error or success messages */}
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             {successMessage && <p className="success-message">{successMessage}</p>}
@@ -179,6 +183,8 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
