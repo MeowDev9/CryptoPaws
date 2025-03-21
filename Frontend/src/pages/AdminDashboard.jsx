@@ -5,12 +5,19 @@ import "../styles/AdminDashboard.css";
 const AdminDashboard = () => {
   const [welfareRequests, setWelfareRequests] = useState([]);
 
-  
+  // Fetch pending welfare requests
   useEffect(() => {
     const fetchWelfareRequests = async () => {
       try {
-        const token = localStorage.getItem("adminToken"); 
-        const response = await axios.get("http://localhost:5001/api/admin/organizations/pending");
+        const token = localStorage.getItem("adminToken");
+        const response = await axios.get(
+          "http://localhost:5001/api/admin/organizations/pending",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setWelfareRequests(response.data);
       } catch (error) {
         console.error("Error fetching welfare requests:", error);
@@ -20,8 +27,8 @@ const AdminDashboard = () => {
     fetchWelfareRequests();
   }, []);
 
-  // Handle approve/reject
-  const handleStatusUpdate = async (id, status) => {
+  // Handle approve
+  const handleApprove = async (id) => {
     try {
       const token = localStorage.getItem("adminToken");
       if (!token) {
@@ -29,21 +36,50 @@ const AdminDashboard = () => {
         return;
       }
 
-      await axios.put(
-        `http://localhost:5001/api/admin/organizations/${id}/status`,
-        { status },
+      const response = await axios.post(
+        `http://localhost:5001/api/admin/organizations/${id}/approve`,
+        {}, // No body needed for approval
         {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      // Update the UI after status change
+      // Update the UI after approval
       setWelfareRequests(welfareRequests.filter((request) => request._id !== id));
-      alert(`Request ${status} successfully!`);
+      alert(response.data.message || "Welfare approved successfully!");
     } catch (error) {
-      console.error("Error updating status:", error);
+      console.error("Error approving welfare:", error);
+      alert(error.response?.data?.message || "Failed to approve welfare.");
+    }
+  };
+
+  // Handle reject
+  const handleReject = async (id) => {
+    try {
+      const token = localStorage.getItem("adminToken");
+      if (!token) {
+        console.error("No token found. Please log in again.");
+        return;
+      }
+
+      const response = await axios.post(
+        `http://localhost:5001/api/admin/organizations/${id}/reject`,
+        {}, // No body needed for rejection
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Update the UI after rejection
+      setWelfareRequests(welfareRequests.filter((request) => request._id !== id));
+      alert(response.data.message || "Welfare rejected successfully!");
+    } catch (error) {
+      console.error("Error rejecting welfare:", error);
+      alert(error.response?.data?.message || "Failed to reject welfare.");
     }
   };
 
@@ -86,13 +122,13 @@ const AdminDashboard = () => {
                 <td>
                   <button
                     className="admin-dashboard-approve-btn"
-                    onClick={() => handleStatusUpdate(request._id, "approved")}
+                    onClick={() => handleApprove(request._id)}
                   >
                     Approve
                   </button>
                   <button
                     className="admin-dashboard-reject-btn"
-                    onClick={() => handleStatusUpdate(request._id, "rejected")}
+                    onClick={() => handleReject(request._id)}
                   >
                     Reject
                   </button>

@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../styles/ProfilePage.css';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = "http://localhost:5001/api/profile";
+const API_URL = "http://localhost:5001/api/profile/profile";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -16,7 +16,7 @@ const ProfilePage = () => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${API_URL}/profile`, {
+        const response = await axios.get(`${API_URL}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json'
