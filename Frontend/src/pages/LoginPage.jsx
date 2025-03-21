@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "../styles/LoginPage.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ParticlesComponent from "../components/Particles";
+
 const LoginPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
@@ -70,10 +72,14 @@ const LoginPage = () => {
   return (
     <>
     <Navbar/>
-    <div className="bg-img-loginpage"><h1>Login / Signup</h1>
-    </div>
     <div className="login-page">
-      <div className={`login-page-container ${isSignUp ? "active" : ""}`} id="login-page-container">
+    {/* Particles Background */}
+    <div className="particles-container">
+      <ParticlesComponent id="particles" />
+    </div>
+
+    {/* Login Form */}
+    <div className={`login-page-container ${isSignUp ? "active" : ""}`} id="login-page-container">
         {/* Sign-Up Form */}
         <div className="form-container sign-up">
           <form onSubmit={handleFormSubmit}>
@@ -183,7 +189,6 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
-    <Footer/>
     </>
   );
 };
