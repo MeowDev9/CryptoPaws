@@ -46,6 +46,7 @@ const RegisterWelfare = () => {
     };
 
     return (
+        <>
         <div className="register-welfare-container">
         <h2>Register as Welfare Organization</h2>
         <form onSubmit={handleSubmit} className="welfare-form">
@@ -114,7 +115,7 @@ const RegisterWelfare = () => {
             <button type="submit" className="submit-btn">Submit Registration</button>
         </form>
     </div>
-    
+    </>
     );
 };
 
