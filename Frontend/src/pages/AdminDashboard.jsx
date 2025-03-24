@@ -10,6 +10,12 @@ const AdminDashboard = () => {
     const fetchWelfareRequests = async () => {
       try {
         const token = localStorage.getItem("adminToken");
+        if (!token) {
+          alert("Session expired. Please log in again.");
+          localStorage.removeItem("adminToken");
+          window.location.href = "/login"; // Redirect to login
+          return;
+        }
         const response = await axios.get(
           "http://localhost:5001/api/admin/organizations/pending",
           {
@@ -21,6 +27,11 @@ const AdminDashboard = () => {
         setWelfareRequests(response.data);
       } catch (error) {
         console.error("Error fetching welfare requests:", error);
+        if (error.response?.status === 401) {
+          alert("Session expired. Please log in again.");
+          localStorage.removeItem("adminToken");
+          window.location.href = "/login"; // Redirect to login
+        }
       }
     };
 

@@ -2,12 +2,14 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+require("dotenv").config();
+
 console.log(User);
 
 const router = express.Router();
 
 
-const JWT_SECRET = "your_jwt_secret_key";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Signup Route
 router.post("/signup", async (req, res) => {
@@ -47,35 +49,43 @@ router.post("/signup", async (req, res) => {
 
 
 router.post("/signin", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;  // Accept role from frontend
 
-    // Validate input
-    if (!email || !password) {
+    if (!email || !password || !role) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
     try {
-        // Check if user exists
-        const user = await User.findOne({ email });
+        let user;
+        let userRole;
+
+        if (role === "donor") {
+            user = await User.findOne({ email });
+            userRole = "donor";
+        } else if (role === "welfare") {
+            user = await WelfareOrganization.findOne({ email });
+            userRole = "welfare";
+        }
+
         if (!user) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
 
-        // Verify the password
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
 
-        // Generate a JWT token
-        const token = jwt.sign({ id: user._id, role: "user"  }, JWT_SECRET, { expiresIn: "1h" });
+        // Generate JWT with correct role
+        const token = jwt.sign({ id: user._id, role: userRole }, JWT_SECRET, { expiresIn: "1h" });
 
-        res.status(200).json({ message: "Signin successful", token });
+        res.status(200).json({ message: "Signin successful", token, role: userRole });
     } catch (error) {
-        console.error(error);
+        console.error("Signin Error:", error);
         res.status(500).json({ message: "Server error" });
     }
 });
+
 
 
 

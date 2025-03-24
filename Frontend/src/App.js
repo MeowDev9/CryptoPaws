@@ -8,9 +8,13 @@ import ReportEmergency from './pages/ReportEmergency';
 import LoginPage from './pages/LoginPage';
 import Donate2 from './pages/Donate2';
 import ProfilePage from './pages/ProfilePage';
- import RegisterWelfare from './pages/RegisterWelfare';
- import AdminLogin from "./pages/AdminLogin";
+import RegisterWelfare from './pages/RegisterWelfare';
 import AdminDashboard from "./pages/AdminDashboard";
+
+import WelfareDashboard from "./pages/dashboards/welfare/WelfareDashboard";
+import WelfareProfile from "./pages/dashboards/welfare/WelfareProfile";
+
+
 
 function App() {
   return (
@@ -25,8 +29,12 @@ function App() {
         <Route path="/donate2" element={<Donate2 />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/register-welfare" element={<RegisterWelfare />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path ="/admin/dashboard" element={<AdminDashboard/>} />
+        <Route path="/welfare/dashboard" element={<WelfareDashboard />} />
+        <Route path="/welfare/profile" element={<WelfareProfile />} />
+
+
+  
       </Routes>
     </Router>
   );

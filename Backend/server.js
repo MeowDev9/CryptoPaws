@@ -9,7 +9,7 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 require("dotenv").config(); 
 
-// Import route files
+
 const emergencyRoutes = require("./routes/emergency");
 const profileRouter = require("./routes/profile");
 const authRoutes = require("./routes/auth");
@@ -17,6 +17,8 @@ const donateRoutes = require("./routes/donate");
 const insertCases = require("./routes/insertcases");
 const welfareRoutes = require("./routes/welfareRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const welfareProfileRoutes = require("./routes/dashboards/welfareProfileRoutes");
+
 
 
 
@@ -62,6 +64,7 @@ app.use("/api/welfare", (req, res, next) => {
     next();
 }, welfareRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/welfare", welfareProfileRoutes);
 
 // Add global error handling middleware
 app.use((err, req, res, next) => {

@@ -1,0 +1,54 @@
+.welfare-profile-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .welfare-profile-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .welfare-profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  
+  .welfare-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .welfare-profile-form label {
+    font-weight: bold;
+  }
+  
+  .welfare-profile-form input,
+  .welfare-profile-form textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .welfare-profile-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .welfare-profile-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .welfare-profile-message {
+    margin-top: 10px;
+    font-weight: bold;
+    color: green;
+  }
+  
